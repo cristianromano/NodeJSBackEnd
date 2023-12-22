@@ -1,0 +1,16 @@
+{
+  "name": "clase1",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon server",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "https://conemu.github.io/",
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}
