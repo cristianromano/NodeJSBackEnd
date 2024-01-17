@@ -1,34 +1,16 @@
-const express = require("express");
-const usuarios = require("./db/users");
-const {
-  getAllUsers,
-  leerUsuario,
-  crearUsuario,
-  borrarUsuario,
-  actualizarUsuario,
-} = require("./controller/users.controller");
-const app = express();
+import express from "express";
+import controller from "./controller/users.controller.js";
+import routerUsuarios from "./router/router.js";
 
+const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.static("public"));
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/api/users", getAllUsers);
-
-app.get("/api/users/:id", leerUsuario);
-
-app.put("/api/users/:id", actualizarUsuario);
-
-app.post("/api/users", crearUsuario);
-
-app.delete("/api/users/:id", borrarUsuario);
+app.use("/api/users", routerUsuarios);
 
 app.all("*", (req, res) => {
   let method = req.method;
@@ -36,4 +18,8 @@ app.all("*", (req, res) => {
   res
     .status(404)
     .send(`<h1>Metodo ${method} con la URL ${url} no existe , ERR 404</h1>`);
+});
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });

@@ -161,4 +161,6 @@ const usuarios = [
   },
 ];
 
-module.exports = usuarios;
+export default {
+  usuarios,
+};

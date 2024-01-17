@@ -1,12 +1,16 @@
-const usuarios = require("../db/users.js");
+import usuarios from "../db/users.js";
+
+import models from "../models/users.model.js";
 
 const getAllUsers = (req, res) => {
-  res.json(usuarios);
+  const user = models.getAll();
+  res.json(user);
 };
 
 const leerUsuario = (req, res) => {
   let id = req.params.id;
-  let usuario = usuarios.find((usuario) => usuario.id == id);
+
+  let usuario = models.getById(Number(id));
   Object.keys(usuario).length === 0
     ? res.status(404).send("Usuario no encontrado")
     : res.status(200).json(usuario);
@@ -36,19 +40,12 @@ const borrarUsuario = (req, res) => {
 
 const actualizarUsuario = (req, res) => {
   let id = req.params.id;
-  let usuario = usuarios.find((usuario) => usuario.id == id);
-  let index = usuarios.indexOf(usuario);
-  let { nombre, apellido } = req.body;
-  let usuarioActualizado = {
-    id: Number(id),
-    nombre: nombre,
-    apellido: apellido,
-  };
-  usuarios[index] = usuarioActualizado;
+  models.updateById(Number(id), req);
+
   res.status(200).json(usuarioActualizado);
 };
 
-module.exports = {
+export default {
   getAllUsers,
   leerUsuario,
   crearUsuario,
